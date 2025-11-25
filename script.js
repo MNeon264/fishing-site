@@ -1,4 +1,6 @@
-function createBubble() {
+const frequency = 200;
+
+const createBubble = () => {
     const bubbleContainer = document.createElement('div');
     bubbleContainer.classList.add('bubble-container');
 
@@ -19,23 +21,32 @@ function createBubble() {
 
     // Add Pop Event
     bubble.addEventListener('click', function(clickEvent) {
-        clickEvent.stopPropagation();
-        
+        clickEvent.stopPropagation();        
+    
         this.classList.add('popped');
 
-        setTimeout(() => {
-            this.remove();
-        }, 200);
+        bubble.addEventListener('animationend', () => {
+            if (this.parentElement) this.parentElement.remove();
+        });
     });
 
-    bubbleContainer.appendChild(bubble)
+    bubbleContainer.appendChild(bubble);
     document.body.appendChild(bubbleContainer);
 
-    setTimeout(() => {
-        if (document.body.contains(bubbleContainer)) {
-            bubbleContainer.remove();
-        };
-    }, duration * 1000);
+    bubbleContainer.addEventListener('animationend', () => {
+        bubbleContainer.remove();
+    });
 };
 
-setInterval(createBubble, 300);
+const handleVisibilityChange = () => {
+    if (document.hidden) {
+        clearInterval(generationInterval);
+    } else {
+        generationInterval = setInterval(createBubble, frequency);
+    };
+};
+
+
+document.addEventListener("visibilitychange", handleVisibilityChange);
+
+setInterval(createBubble, frequency);

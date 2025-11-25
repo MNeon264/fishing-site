@@ -1,8 +1,18 @@
 body {
     margin: 0;
     height: 100vh;
-    background: linear-gradient(to bottom, #2b32b2, #1488cc);
+    background: linear-gradient(to bottom, #a8c3f5, #1488cc, #424872);
     overflow: hidden;
+}
+
+#header {
+    background: rgb(189, 217, 255);
+    box-shadow: 0 3px 3px rgba(0,0,0,0.05);
+    height: 120px;
+    width: 100%;
+    top: 60px;
+    position: relative;
+    margin-bottom: 40px;
 }
 
 .bubble-container {
@@ -20,17 +30,23 @@ body {
     box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5);
     cursor: pointer;
     pointer-events: auto;
+    animation: waver 0.5s ease-in-out alternate infinite;
 }
 
 .bubble.popped {
     animation: pop 0.2s forwards;
 }
 
-@keyframes floatUp {
+@keyframes waver {
     0% {
-        transform: translateY(0);
-        opacity: 1;
+        transform: translateX(-0.3vh);
     }
+    100% {
+        transform: translateX(0.3vh);
+    }
+}
+
+@keyframes floatUp {
     100% {
         transform: translateY(-120vh);
         opacity: 0;
@@ -38,10 +54,6 @@ body {
 }
 
 @keyframes pop {
-    0% {
-        transform: scale(1);
-        opacity: 1;
-    }
     100% {
         transform: scale(1.5);
         opacity: 0;
